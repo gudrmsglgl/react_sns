@@ -1,5 +1,10 @@
 import { create } from "zustand";
-import { combine } from "zustand/middleware";
+import {
+  combine,
+  subscribeWithSelector,
+  persist,
+  createJSONStorage,
+} from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 
 type Store = {
@@ -60,23 +65,42 @@ type Store = {
 // }));
 
 const useCounterStore = create(
-  immer(
-    combine({ count: 0 }, (set, get) => ({
-      count: 0,
-      actions: {
-        increment: () => {
-          set((state) => {
-            state.count += 1;
-          });
-        },
-        decrement: () => {
-          set((state) => {
-            state.count -= 1;
-          });
-        },
-      },
-    })),
+  persist(
+    subscribeWithSelector(
+      immer(
+        combine({ count: 0 }, (set, get) => ({
+          count: 0,
+          actions: {
+            increment: () => {
+              set((state) => {
+                state.count += 1;
+              });
+            },
+            decrement: () => {
+              set((state) => {
+                state.count -= 1;
+              });
+            },
+          },
+        })),
+      ),
+    ),
+    {
+      name: "counterState",
+      partialize: (store) => ({ count: store.count }),
+      storage: createJSONStorage(() => sessionStorage),
+    },
   ),
+);
+
+useCounterStore.subscribe(
+  (state) => state.count,
+  (count, prevCount) => {
+    console.log("updated count", count);
+    console.log("prev count", prevCount);
+
+    const store = useCounterStore.getState();
+  },
 );
 
 export const useCount = () => {
