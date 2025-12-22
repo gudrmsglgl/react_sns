@@ -69,7 +69,6 @@ const useCounterStore = create(
     subscribeWithSelector(
       immer(
         combine({ count: 0 }, (set, get) => ({
-          count: 0,
           actions: {
             increment: () => {
               set((state) => {
