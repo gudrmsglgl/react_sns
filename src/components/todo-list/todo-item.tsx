@@ -1,16 +1,20 @@
 import { Button } from "@/components/ui/button";
-import { useDeleteTodo } from "@/stores/todo";
 import type { Todo } from "@/types";
 import { Link } from "react-router";
 import { useUpdateTodoMutation } from "@/hooks/queries/use-update-todo-mutation";
+import { useDeleteTodoMutation } from "@/hooks/queries/use-delete-todo-mutation";
 
 export default function TodoItem({ id, content, isDone }: Todo) {
-  const deleteTodoAction = useDeleteTodo();
-
-  const { mutate, isPending } = useUpdateTodoMutation();
+  const { mutate: updateTodoMutation, isPending: isUpdating } =
+    useUpdateTodoMutation();
+  const { mutate: deleteTodoMutation, isPending: isDeleting } =
+    useDeleteTodoMutation();
 
   const handleUpdateTodo = () => {
-    mutate({ id, isDone: !isDone });
+    updateTodoMutation({ id, isDone: !isDone });
+  };
+  const handleDeleteTodo = () => {
+    deleteTodoMutation(id);
   };
 
   return (
@@ -19,12 +23,17 @@ export default function TodoItem({ id, content, isDone }: Todo) {
         <input
           type={"checkbox"}
           checked={isDone}
+          disabled={isDeleting}
           onChange={() => handleUpdateTodo()}
         />
         <Link to={`/todo-list/${id}`}>{content}</Link>
       </div>
 
-      <Button variant={"destructive"} onClick={() => deleteTodoAction(id)}>
+      <Button
+        disabled={isDeleting}
+        variant={"destructive"}
+        onClick={() => handleDeleteTodo()}
+      >
         삭제
       </Button>
     </div>
