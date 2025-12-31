@@ -1,34 +1,8 @@
 import "./App.css";
 import { Routes, Route, Outlet } from "react-router";
-import IndexPage from "./pages/index-page";
-import SignInPage from "./pages/sign-in-page";
-import SignUpPage from "./pages/sign-up-page";
-import CounterPage from "./pages/counter-page";
-import TodoListPage from "./pages/todo-list-page";
-import TodoDetailPage from "./pages/todo-detail-page";
-
-function AuthLayout() {
-  return (
-    <div>
-      Auth Layout
-      <Outlet />
-    </div>
-  );
-}
 
 function App() {
-  return (
-    <Routes>
-      <Route path="/" element={<IndexPage />} />
-      <Route path="/counter" element={<CounterPage />} />
-      <Route path="/todo-list" element={<TodoListPage />} />
-      <Route path="/todo-list/:id" element={<TodoDetailPage />} />
-      <Route element={<AuthLayout />}>
-        <Route path="/sign-in" element={<SignInPage />} />
-        <Route path="/sign-up" element={<SignUpPage />} />
-      </Route>
-    </Routes>
-  );
+  return <Routes></Routes>;
 }
 
 export default App;
