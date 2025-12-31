@@ -3,31 +3,26 @@
     {
       "id": "1",
       "content": "Todo 1",
-      "isDone": true
+      "isDone": false
     },
     {
       "id": "2",
       "content": "Todo 2",
-      "isDone": true
+      "isDone": false
     },
     {
       "id": "3",
       "content": "Todo 3",
-      "isDone": true
+      "isDone": false
     },
     {
       "id": "e94a",
       "content": "새롭게",
-      "isDone": false
+      "isDone": true
     },
     {
-      "id": "f722",
-      "content": "ddd",
-      "isDone": false
-    },
-    {
-      "id": "c887",
-      "content": "뉴 할일",
+      "id": "7240",
+      "content": "뉴뉴뉴",
       "isDone": false
     }
   ]
